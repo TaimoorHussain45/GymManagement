@@ -140,33 +140,7 @@ const LandingPage: React.FC = () => {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4 }}
-              className="mt-8 p-6 bg-white/10 backdrop-blur-sm rounded-xl border border-white/20"
-            >
-              <h3 className="text-lg font-semibold text-white mb-4">🚀 Try Demo Accounts</h3>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
-                <div className="bg-red-500/20 p-4 rounded-lg">
-                  <h4 className="font-semibold text-white mb-2">👑 Admin Access</h4>
-                  <p className="text-blue-100 mb-2">admin@gymflow.com</p>
-                  <p className="text-blue-100">Password: admin123</p>
-                </div>
-                <div className="bg-blue-500/20 p-4 rounded-lg">
-                  <h4 className="font-semibold text-white mb-2">💪 Trainer Access</h4>
-                  <p className="text-blue-100 mb-2">john@gymflow.com</p>
-                  <p className="text-blue-100">Password: trainer123</p>
-                </div>
-                <div className="bg-green-500/20 p-4 rounded-lg">
-                  <h4 className="font-semibold text-white mb-2">🏃 Member Access</h4>
-                  <p className="text-blue-100 mb-2">mike@example.com</p>
-                  <p className="text-blue-100">Password: member123</p>
-                </div>
-              </div>
-            </motion.div>
-            
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5 }}
+              transition={{ delay: 0.3 }}
               className="flex flex-col sm:flex-row gap-4 justify-center"
             >
               <Link

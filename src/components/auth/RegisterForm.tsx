@@ -8,6 +8,7 @@ import { Eye, EyeOff, Dumbbell } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 import { RegisterData, UserRole } from '../../types';
 import Button from '../common/Button';
+import toast from 'react-hot-toast';
 
 const schema = yup.object({
   name: yup.string().required('Name is required'),
@@ -63,6 +64,7 @@ const RegisterForm: React.FC = () => {
     register,
     handleSubmit,
     watch,
+    setValue,
     formState: { errors },
   } = useForm<FormData>({
     resolver: yupResolver(schema),
@@ -82,6 +84,27 @@ const RegisterForm: React.FC = () => {
     } catch (error) {
       // Error is handled by the auth context
     }
+  };
+
+  const fillDemoAccount = (role: UserRole) => {
+    setValue('name', role === 'admin' ? 'Admin User' : role === 'trainer' ? 'John Smith' : 'Mike Chen');
+    setValue('email', role === 'admin' ? 'admin@gymflow.com' : role === 'trainer' ? 'john@gymflow.com' : 'mike@example.com');
+    setValue('password', role === 'admin' ? 'admin123' : role === 'trainer' ? 'trainer123' : 'member123');
+    setValue('confirmPassword', role === 'admin' ? 'admin123' : role === 'trainer' ? 'trainer123' : 'member123');
+    setValue('role', role);
+    setValue('phone', '555-0001');
+    
+    if (role === 'trainer') {
+      setValue('specialization', ['Weight Training', 'Cardio']);
+      setValue('experience', 5);
+    } else if (role === 'member') {
+      setValue('membershipType', 'premium');
+      setValue('emergencyContact', '555-0005');
+      setValue('address', '123 Main St, City, State');
+      setValue('age', 28);
+    }
+    
+    toast.success(`Demo ${role} credentials filled! Complete registration to continue.`);
   };
 
   const specializations = [
@@ -114,6 +137,37 @@ const RegisterForm: React.FC = () => {
           <p className="mt-2 text-sm text-blue-200">
             Create your account and start your fitness journey
           </p>
+          
+          {/* Demo Accounts Section */}
+          <div className="mt-6 p-4 bg-white/10 backdrop-blur-sm rounded-xl border border-white/20">
+            <p className="text-sm text-blue-200 mb-3 font-medium">🚀 Quick Demo Registration (Click to auto-fill):</p>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
+              <button
+                type="button"
+                onClick={() => fillDemoAccount('admin')}
+                className="bg-red-500/20 hover:bg-red-500/30 text-white px-4 py-3 rounded-lg transition-colors border border-red-400/30 hover:border-red-400/50"
+              >
+                <div className="font-semibold text-red-200">👑 Admin Demo</div>
+                <div className="text-red-100 mt-1">Full Management</div>
+              </button>
+              <button
+                type="button"
+                onClick={() => fillDemoAccount('trainer')}
+                className="bg-blue-500/20 hover:bg-blue-500/30 text-white px-4 py-3 rounded-lg transition-colors border border-blue-400/30 hover:border-blue-400/50"
+              >
+                <div className="font-semibold text-blue-200">💪 Trainer Demo</div>
+                <div className="text-blue-100 mt-1">Member Training</div>
+              </button>
+              <button
+                type="button"
+                onClick={() => fillDemoAccount('member')}
+                className="bg-green-500/20 hover:bg-green-500/30 text-white px-4 py-3 rounded-lg transition-colors border border-green-400/30 hover:border-green-400/50"
+              >
+                <div className="font-semibold text-green-200">🏃 Member Demo</div>
+                <div className="text-green-100 mt-1">Fitness Journey</div>
+              </button>
+            </div>
+          </div>
         </motion.div>
 
         <motion.div
