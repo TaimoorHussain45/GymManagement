@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { User, AuthContextType, RegisterData } from '../types';
+import { User, AuthContextType, RegisterData, UserRole } from '../types';
 import { authAPI } from '../api/auth';
 import toast from 'react-hot-toast';
 

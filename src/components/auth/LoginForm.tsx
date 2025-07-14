@@ -7,6 +7,7 @@ import * as yup from 'yup';
 import { Eye, EyeOff, Dumbbell } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 import Button from '../common/Button';
+import toast from 'react-hot-toast';
 
 const schema = yup.object({
   email: yup.string().email('Invalid email').required('Email is required'),
@@ -22,11 +23,11 @@ const LoginForm: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false);
   const { login, loading } = useAuth();
   const navigate = useNavigate();
-  const [demoMode, setDemoMode] = useState(false);
 
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm<FormData>({
     resolver: yupResolver(schema),
@@ -43,6 +44,12 @@ const LoginForm: React.FC = () => {
     } catch (error) {
       // Error is handled by the auth context
     }
+  };
+
+  const fillDemoAccount = (email: string, password: string) => {
+    setValue('email', email);
+    setValue('password', password);
+    toast.success('Demo credentials filled! Click Sign In to continue.');
   };
 
   return (
@@ -66,38 +73,47 @@ const LoginForm: React.FC = () => {
           </p>
           
           {/* Demo Accounts Section */}
-          <div className="mt-4 p-4 bg-white/10 backdrop-blur-sm rounded-lg">
-            <p className="text-sm text-blue-200 mb-3">Demo Accounts (Click to auto-fill):</p>
-            <div className="grid grid-cols-1 gap-2 text-xs">
+          <div className="mt-6 p-4 bg-white/10 backdrop-blur-sm rounded-lg border border-white/20">
+            <p className="text-sm text-blue-200 mb-3 font-medium">🚀 Try Demo Accounts (Click to auto-fill):</p>
+            <div className="grid grid-cols-1 gap-3 text-xs">
               <button
                 type="button"
-                onClick={() => {
-                  document.querySelector<HTMLInputElement>('input[name="email"]')!.value = 'admin@gymflow.com';
-                  document.querySelector<HTMLInputElement>('input[name="password"]')!.value = 'admin123';
-                }}
-                className="bg-red-500/20 hover:bg-red-500/30 text-white px-3 py-2 rounded transition-colors text-left"
+                onClick={() => fillDemoAccount('admin@gymflow.com', 'admin123')}
+                className="bg-red-500/20 hover:bg-red-500/30 text-white px-4 py-3 rounded-lg transition-colors text-left border border-red-400/30 hover:border-red-400/50"
               >
-                <strong>Admin:</strong> admin@gymflow.com / admin123
+                <div className="flex items-center justify-between">
+                  <div>
+                    <div className="font-semibold text-red-200">👑 Admin Access</div>
+                    <div className="text-red-100 mt-1">admin@gymflow.com</div>
+                  </div>
+                  <div className="text-red-200 text-xs">Click to fill</div>
+                </div>
               </button>
               <button
                 type="button"
-                onClick={() => {
-                  document.querySelector<HTMLInputElement>('input[name="email"]')!.value = 'john@gymflow.com';
-                  document.querySelector<HTMLInputElement>('input[name="password"]')!.value = 'trainer123';
-                }}
-                className="bg-blue-500/20 hover:bg-blue-500/30 text-white px-3 py-2 rounded transition-colors text-left"
+                onClick={() => fillDemoAccount('john@gymflow.com', 'trainer123')}
+                className="bg-blue-500/20 hover:bg-blue-500/30 text-white px-4 py-3 rounded-lg transition-colors text-left border border-blue-400/30 hover:border-blue-400/50"
               >
-                <strong>Trainer:</strong> john@gymflow.com / trainer123
+                <div className="flex items-center justify-between">
+                  <div>
+                    <div className="font-semibold text-blue-200">💪 Trainer Access</div>
+                    <div className="text-blue-100 mt-1">john@gymflow.com</div>
+                  </div>
+                  <div className="text-blue-200 text-xs">Click to fill</div>
+                </div>
               </button>
               <button
                 type="button"
-                onClick={() => {
-                  document.querySelector<HTMLInputElement>('input[name="email"]')!.value = 'mike@example.com';
-                  document.querySelector<HTMLInputElement>('input[name="password"]')!.value = 'member123';
-                }}
-                className="bg-green-500/20 hover:bg-green-500/30 text-white px-3 py-2 rounded transition-colors text-left"
+                onClick={() => fillDemoAccount('mike@example.com', 'member123')}
+                className="bg-green-500/20 hover:bg-green-500/30 text-white px-4 py-3 rounded-lg transition-colors text-left border border-green-400/30 hover:border-green-400/50"
               >
-                <strong>Member:</strong> mike@example.com / member123
+                <div className="flex items-center justify-between">
+                  <div>
+                    <div className="font-semibold text-green-200">🏃 Member Access</div>
+                    <div className="text-green-100 mt-1">mike@example.com</div>
+                  </div>
+                  <div className="text-green-200 text-xs">Click to fill</div>
+                </div>
               </button>
             </div>
           </div>

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import toast from 'react-hot-toast';
 import { 
   Dumbbell, 
   Users, 
@@ -446,6 +447,7 @@ const LandingPage: React.FC = () => {
                     Full Name
                   </label>
                   <input
+                    id="contact-name"
                     type="text"
                     className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-800 dark:text-white"
                     placeholder="Enter your full name"
@@ -457,6 +459,7 @@ const LandingPage: React.FC = () => {
                     Email Address
                   </label>
                   <input
+                    id="contact-email"
                     type="email"
                     className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-800 dark:text-white"
                     placeholder="Enter your email"
@@ -468,6 +471,7 @@ const LandingPage: React.FC = () => {
                     Message
                   </label>
                   <textarea
+                    id="contact-message"
                     rows={4}
                     className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-800 dark:text-white"
                     placeholder="Tell us about your fitness goals"
@@ -476,6 +480,22 @@ const LandingPage: React.FC = () => {
                 
                 <button
                   type="submit"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    const name = (document.getElementById('contact-name') as HTMLInputElement)?.value;
+                    const email = (document.getElementById('contact-email') as HTMLInputElement)?.value;
+                    const message = (document.getElementById('contact-message') as HTMLTextAreaElement)?.value;
+                    
+                    if (name && email && message) {
+                      toast.success('Thank you for your message! We\'ll get back to you soon.');
+                      // Clear form
+                      (document.getElementById('contact-name') as HTMLInputElement).value = '';
+                      (document.getElementById('contact-email') as HTMLInputElement).value = '';
+                      (document.getElementById('contact-message') as HTMLTextAreaElement).value = '';
+                    } else {
+                      toast.error('Please fill in all fields.');
+                    }
+                  }}
                   className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-semibold transition-colors duration-200"
                 >
                   Send Message
